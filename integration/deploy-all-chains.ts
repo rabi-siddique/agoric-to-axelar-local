@@ -289,21 +289,27 @@ const deployToAllChains = async (
   console.log(`Continue on Error: ${continueOnError}`);
   console.log("═══════════════════════════════════════════════════════════\n");
 
-  // Sync nonces before deployment
-  const syncResult = await checkAndSyncNonces(chains);
-  if (!syncResult.success) {
-    console.error("❌ Nonce sync failed, aborting deployment.\n");
-    process.exit(1);
-  }
-
-  // Wait for nonce sync transactions to get enough confirmations
-  // Hardhat Ignition requires at least 5 confirmations before deploying
-  if (syncResult.synced) {
+  // Sync nonces before deployment (skip for CREATE2-deployed contracts)
+  if (contract === "remoteAccountFactory") {
     console.log(
-      "⏳ Waiting 60 seconds for nonce sync transactions to confirm...\n",
+      "ℹ️  Skipping nonce sync for remoteAccountFactory (uses CREATE2)\n",
     );
-    await new Promise((resolve) => setTimeout(resolve, 60000));
-    console.log("✅ Ready to deploy\n");
+  } else {
+    const syncResult = await checkAndSyncNonces(chains);
+    if (!syncResult.success) {
+      console.error("❌ Nonce sync failed, aborting deployment.\n");
+      process.exit(1);
+    }
+
+    // Wait for nonce sync transactions to get enough confirmations
+    // Hardhat Ignition requires at least 5 confirmations before deploying
+    if (syncResult.synced) {
+      console.log(
+        "⏳ Waiting 60 seconds for nonce sync transactions to confirm...\n",
+      );
+      await new Promise((resolve) => setTimeout(resolve, 60000));
+      console.log("✅ Ready to deploy\n");
+    }
   }
 
   const results: DeployResult[] = [];
