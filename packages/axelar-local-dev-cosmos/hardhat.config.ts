@@ -87,6 +87,17 @@ const mainnets = {
 };
 
 const config: HardhatUserConfig = {
+  ignition: {
+    strategyConfig: {
+      create2: {
+        // Fixed salt for deterministic cross-chain addresses via CreateX.
+        // RemoteAccount and RemoteAccountFactory have identical constructor
+        // args across chains, so CREATE2 produces the same address everywhere
+        // without nonce synchronization.
+        salt: "0x0000000000000000000000000000000000000000000000000000000000000000",
+      },
+    },
+  },
   solidity: {
     compilers: [
       {

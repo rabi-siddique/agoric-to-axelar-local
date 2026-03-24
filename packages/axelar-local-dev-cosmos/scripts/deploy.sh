@@ -162,7 +162,7 @@ case "$contract" in
         PRINCIPAL_CAIP2="$PRINCIPAL_CAIP2" \
             PRINCIPAL_ACCOUNT="$PRINCIPAL_ACCOUNT" \
             VETTING_AUTHORITY="$VETTING_AUTHORITY" \
-            npx hardhat ignition deploy "./ignition/modules/deployRemoteAccountFactory.ts" --network "$network" --verify
+            npx hardhat ignition deploy "./ignition/modules/deployRemoteAccountFactory.ts" --network "$network" --strategy create2 --verify
         ;;
 
     portfolioRouter)
