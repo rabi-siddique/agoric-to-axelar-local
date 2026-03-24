@@ -46,7 +46,7 @@ interface IRemoteAccountRouter {
     event OperationResult(
         string indexed txId,
         string indexed sourceAddressIndex,
-        string sourceAddress,
+        string txIdPlaintext,
         address indexed allegedRemoteAccount,
         bytes4 instructionSelector,
         bool success,

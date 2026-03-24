@@ -250,15 +250,7 @@ contract RemoteAccountAxelarRouter is AxelarExecutable, IRemoteAccountRouter {
         (bool success, bytes memory result) = processInstruction(payload, sourceAddress);
 
         // Note that this is a transport-level event applicable to any instruction.
-        emit OperationResult(
-            txId,
-            sourceAddress,
-            sourceAddress,
-            expectedAddress,
-            selector,
-            success,
-            result
-        );
+        emit OperationResult(txId, sourceAddress, txId, expectedAddress, selector, success, result);
     }
 
     /**

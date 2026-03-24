@@ -128,7 +128,7 @@ describe('RemoteAccountAxelarRouter - RemoteAccountMulticall', () => {
 
         const receipt = await route(portfolioLCA).doRemoteAccountExecute({ multiCalls });
         const operationResult = receipt.expectOperationSuccess();
-        expect(operationResult.args.sourceAddress).to.equal(portfolioLCA);
+        expect(operationResult.args.txIdPlaintext).to.equal(receipt.txId);
         expect(operationResult.args.sourceAddressIndex.hash).to.equal(
             keccak256(toUtf8Bytes(portfolioLCA)),
         );
